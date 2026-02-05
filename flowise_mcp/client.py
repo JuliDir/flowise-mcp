@@ -92,7 +92,11 @@ async def make_api_request(
             if response.status_code == 204:
                 return {"success": True}
 
-            return response.json()
+            content_type = response.headers.get("content-type", "")
+            if "application/json" in content_type:
+                return response.json()
+
+            return response.text
 
         except httpx.HTTPStatusError as e:
             raise FlowiseClientError(

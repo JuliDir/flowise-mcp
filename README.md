@@ -1,7 +1,8 @@
 # Flowise MCP Server
 
+[![PyPI version](https://badge.fury.io/py/flowise-mcp.svg)](https://pypi.org/project/flowise-mcp/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![MCP](https://img.shields.io/badge/MCP-compatible-green.svg)](https://modelcontextprotocol.io/)
 [![Flowise](https://img.shields.io/badge/Flowise-API-purple.svg)](https://flowiseai.com/)
 
@@ -20,14 +21,21 @@ An MCP (Model Context Protocol) server that enables AI agents to interact with [
 
 ## Requirements
 
-- [uv](https://docs.astral.sh/uv/) package manager
+- Python 3.10+ or [uv](https://docs.astral.sh/uv/) package manager
 - A running Flowise instance with API access
 
 ## Installation
 
-### 1. Install uv
+### Option A: Using pip
 
 ```bash
+pip install flowise-mcp
+```
+
+### Option B: Using uv (recommended)
+
+```bash
+# Install uv first if you don't have it
 # Windows (PowerShell)
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 
@@ -35,9 +43,7 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-### 2. Configure your AI client
-
-No need to clone the repository. Just add the configuration below to your client.
+Then configure your AI client to use `uvx flowise-mcp` (see below).
 
 ## Configuration
 
@@ -68,10 +74,7 @@ Add to `.vscode/mcp.json` in your project or to your User Settings (JSON):
   "servers": {
     "flowise": {
       "command": "uvx",
-      "args": [
-        "--from", "git+https://github.com/JuliDir/flowise-mcp",
-        "flowise-mcp"
-      ],
+      "args": ["flowise-mcp"],
       "env": {
         "FLOWISE_BASE_URL": "https://your-flowise-instance.com",
         "FLOWISE_API_KEY": "your-api-key"
@@ -94,10 +97,7 @@ Add to your config file:
   "mcpServers": {
     "flowise": {
       "command": "uvx",
-      "args": [
-        "--from", "git+https://github.com/JuliDir/flowise-mcp",
-        "flowise-mcp"
-      ],
+      "args": ["flowise-mcp"],
       "env": {
         "FLOWISE_BASE_URL": "https://your-flowise-instance.com",
         "FLOWISE_API_KEY": "your-api-key"
@@ -176,8 +176,14 @@ If you want to contribute or run locally:
 ```bash
 git clone https://github.com/JuliDir/flowise-mcp.git
 cd flowise-mcp
+
+# Using uv
 uv sync --extra dev
 uv run pytest
+
+# Or using pip
+pip install -e ".[dev]"
+pytest
 ```
 
 ## Troubleshooting
